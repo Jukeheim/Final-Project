@@ -1,0 +1,108 @@
+.pokemon-card {
+    background-color: #2b2b2b;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    
+}
+
+.pokemon-card h1 {
+    text-transform: capitalize;
+}
+
+.pokemon-card img {
+    width: 100px;
+    height: 100px;
+    display: block;
+    margin: 0 auto;
+ 
+}
+
+.pokemon-card .types {
+    margin-top: 10px;
+}
+
+.pokemon-card .type {
+    display: inline-block;
+    margin: 5px;
+    padding: 5px 10px;
+    border-radius: 15px;
+    color: rgb(0, 0, 0);
+}
+.pokemon-card .type.grass {
+    background-color: #78C850;
+}
+
+.pokemon-card .type.poison {
+    background-color: #A040A0;
+}
+
+.pokemon-card .type.fire {
+    background-color: #F08030;
+}
+
+.pokemon-card .type.water {
+    background-color: #6890F0;
+}
+
+.pokemon-card .type.bug {
+    background-color: #A8B820;
+}
+
+.pokemon-card .type.normal {
+    background-color: #A8A878;
+}
+
+.pokemon-card .type.electric {
+    background-color: #F8D030;
+}
+
+.pokemon-card .type.fighting {
+    background-color: #C03028;
+}
+
+.pokemon-card .type.flying {
+    background-color: #A890F0;
+}
+
+.pokemon-card .type.ice {
+    background-color: #98D8D8;
+}
+
+.pokemon-card .type.ground {
+    background-color: #E0C068;
+}
+
+.pokemon-card .type.rock {
+    background-color: #B8A038;
+}
+
+.pokemon-card .type.psychic {
+    background-color: #F85888;
+}
+
+.pokemon-card .type.ghost {
+    background-color: #705898;
+}
+
+.pokemon-card .type.dragon {
+    background-color: #7038F8;
+}
+
+.pokemon-card .type.dark {
+    background-color: #705848;
+}
+
+.pokemon-card .type.steel {
+    background-color: #B8B8D0;
+}
+
+.pokemon-card .type.fairy {
+    background-color: #EE99AC;
+}
+
+
+.pokemon-card .type {
+    background-color: #e0e0e0;
+   
+}
