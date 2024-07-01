@@ -6,6 +6,7 @@ const authMiddlewares = require("./../middlewares/auth.middleware");
 const likedPokemonsController = require("../controllers/likedPokemon")
 
 
+
 //Pokemon Api routes
 
 router.get('/pokemon', pokedexController.listPokemon);
@@ -32,5 +33,8 @@ router.get("/users/:id", usersController.getUser);
 
 router.post('/pokemon/like', likedPokemonsController.addLikedPokemon)
 router.get('/pokemon/liked/:userId', likedPokemonsController.getLikedPokemons)
+
+
+
 
 module.exports = router;
