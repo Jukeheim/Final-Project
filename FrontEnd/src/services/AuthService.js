@@ -1,7 +1,7 @@
-import createHttp from "./BaseService";
+import createHttp from "./BaseService"
 
-const http = createHttp(true);
+const http = createHttp(true)
 
 export const getCurrentUserService = () => {
-    return http.get("/users/me");
-};
+    return http.get("/users/me")
+}

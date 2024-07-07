@@ -4,7 +4,7 @@ const authController = require("../controllers/auth.controller");
 const usersController = require("../controllers/users.controller");
 const authMiddlewares = require("./../middlewares/auth.middleware");
 const likedPokemonsController = require("../controllers/likedPokemon")
-
+const eventController = require('../controllers/Event.controller')
 
 
 //Pokemon Api routes
@@ -35,6 +35,16 @@ router.post('/pokemon/like', likedPokemonsController.addLikedPokemon)
 router.get('/pokemon/liked/:userId', likedPokemonsController.getLikedPokemons)
 
 
+//Events
 
+router.post('/events', authMiddlewares.isAuthenticated, eventController.createEvent)
+router.put('/events/:id', authMiddlewares.isAuthenticated, eventController.editEvent)
+router.delete('/events/:id', authMiddlewares.isAuthenticated, eventController.deleteEvent)
+router.post('/events/:id/join', authMiddlewares.isAuthenticated, eventController.joinEvent)
+router.get('/events', authMiddlewares.isAuthenticated, eventController.getEventList)
+
+//registered Pokemons
+
+router.post('/events/:id/register', authMiddlewares.isAuthenticated, eventController.registerPokemon)
 
 module.exports = router;

@@ -1,7 +1,7 @@
-import { useContext, useState } from "react";
-import { loginService } from "../../services/UserService";
-import { AuthContext } from "../../contexts/AuthContext";
-import { Navigate } from "react-router-dom";
+import { useContext, useState } from "react"
+import { loginService } from "../../services/UserService"
+import { AuthContext } from "../../contexts/AuthContext"
+import { Navigate } from "react-router-dom"
 
 function Login() {
     const { login, user: currentUser } = useContext(AuthContext)
@@ -49,7 +49,7 @@ function Login() {
                 <button type="submit" className="btn btn-primary">Login</button>
             </form>
         </div>
-    );
+    )
 }
 
 export default Login

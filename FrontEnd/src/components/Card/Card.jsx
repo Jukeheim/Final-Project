@@ -1,9 +1,9 @@
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import './Card.css'
-import { likePokemon } from '../../services/PokedexService';
-import { useContext } from 'react';
-import { AuthContext } from '../../contexts/AuthContext';
+import { likePokemon } from '../../services/PokedexService'
+import { useContext } from 'react'
+import { AuthContext } from '../../contexts/AuthContext'
 
 
 function PokemonCard ({ pokemon }) {
@@ -54,7 +54,7 @@ PokemonCard.propTypes = {
             }).isRequired
         })).isRequired
     }).isRequired
-};
+}
 
 
 

@@ -1,40 +1,40 @@
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { getPokemonDetails, getPokemonSpecies, getEvolutionChain } from '../../services/PokedexService'
 import './PokemonDetails.css'
 
 function PokemonDetails(){
-    const { name } = useParams();
-    const [pokemonDetails, setPokemonDetails] = useState(null);
-    const [speciesDetails, setSpeciesDetails] = useState(null);
-    const [evolutionStages, setEvolutionStages] = useState([]);
-    const [introduction, setIntroduction] = useState('');
+    const { name } = useParams()
+    const [pokemonDetails, setPokemonDetails] = useState(null)
+    const [speciesDetails, setSpeciesDetails] = useState(null)
+    const [evolutionStages, setEvolutionStages] = useState([])
+    const [introduction, setIntroduction] = useState('')
 
     useEffect(() => {
         getPokemonDetails(name)
         .then(details => {
             if(details) {
-                setPokemonDetails(details);
-                return getPokemonSpecies(name);
+                setPokemonDetails(details)
+                return getPokemonSpecies(name)
             }
         })
         .then(species => {
             if(species) {
-                setSpeciesDetails(species);
+                setSpeciesDetails(species)
                 setIntroduction(species.flavor_text_entries
-                .find(entry => entry.language.name === 'en').flavor_text);
-                return getEvolutionChain(species.evolution_chain.url);
+                .find(entry => entry.language.name === 'en').flavor_text)
+                return getEvolutionChain(species.evolution_chain.url)
             }
         })
         .then(evolution => {
             if(evolution){
-                const stages = [];
-                let currentStage = evolution.chain;
-                const promises = [];
+                const stages = []
+                let currentStage = evolution.chain
+                const promises = []
 
                 while (currentStage) {
-                    promises.push(getPokemonDetails(currentStage.species.name));
-                    currentStage = currentStage.evolves_to[0];
+                    promises.push(getPokemonDetails(currentStage.species.name))
+                    currentStage = currentStage.evolves_to[0]
                 }
 
                 Promise.all(promises).then(results => {
@@ -42,19 +42,19 @@ function PokemonDetails(){
                         stages.push({
                             name: result.name,
                             sprite: result.sprites.front_default
-                        });
-                    });
-                    setEvolutionStages(stages);
-                });
+                        })
+                    })
+                    setEvolutionStages(stages)
+                })
             }
         })
         .catch(error => {
-            console.error('error fetching', error);
-        });
-    }, [name]);
+            console.error('error fetching', error)
+        })
+    }, [name])
 
     if(!pokemonDetails || !speciesDetails){
-        return <div>Loading ...</div>;
+        return <div>Loading ...</div>
     }
 
     return(
@@ -97,7 +97,7 @@ function PokemonDetails(){
                 </div>
             </div>
         </div>
-    );
+    )
 }
 
-export default PokemonDetails;
+export default PokemonDetails

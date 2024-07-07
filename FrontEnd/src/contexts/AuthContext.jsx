@@ -1,31 +1,31 @@
-import { createContext, useEffect, useState } from "react";
-import { getAccessToken, setAccessToken } from "../stores/AccessTokenStore";
-import { getCurrentUserService } from "../services/AuthService";
-import { useNavigate } from "react-router-dom";
+import { createContext, useEffect, useState } from "react"
+import { getAccessToken, setAccessToken } from "../stores/AccessTokenStore"
+import { getCurrentUserService } from "../services/AuthService"
+import { useNavigate } from "react-router-dom"
 
-export const AuthContext = createContext();
+export const AuthContext = createContext()
 
 export const AuthContextProvider = ({ children }) => {
     const [user, setUser] = useState(null)
-    const [isAuthLoaded, setIsAuthLoaded] = useState(false);
+    const [isAuthLoaded, setIsAuthLoaded] = useState(false)
 
-    const navigate = useNavigate();
+    const navigate = useNavigate()
 
     const getUser = (cb) => {
         getCurrentUserService()
             .then(user => {
-                setUser(user);
+                setUser(user)
                 setIsAuthLoaded(true)
 
-                cb && cb();
+                cb && cb()
             })
             .catch(err => {
-                console.error(err);
+                console.error(err)
             })
     }
 
     const login = (token) => {
-        setAccessToken(token);
+        setAccessToken(token)
 
         getUser(() => navigate('/profile'))
     }
@@ -46,5 +46,5 @@ export const AuthContextProvider = ({ children }) => {
         }}>
             {children}
         </AuthContext.Provider>
-    );
-};
+    )
+}

@@ -1,6 +1,6 @@
 
-import Navbar from '../../components/Navbar/Navbar';
-import './Homepage.css';
+import Navbar from '../../components/Navbar/Navbar'
+import './Homepage.css'
 
 function HomePage() {
     return (
@@ -14,7 +14,7 @@ function HomePage() {
                 </div>
             </header>
         </div>
-    );
+    )
 }
 
-export default HomePage;
+export default HomePage

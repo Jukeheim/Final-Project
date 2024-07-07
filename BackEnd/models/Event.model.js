@@ -1,40 +1,37 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const eventSchema = new mongoose.Schema ({
-    name : {
-        type : String,
+const EventSchema = new Schema({
+    name: { 
+        type: String,
         required: true
     },
-    date : {
-        type: Date,
-        required: true
+    date: { 
+        type: Date, 
+        required: true 
     },
-    maxParticipants : {
-        type: Number,
-        required: true
+    maxParticipants: { 
+        type: Number, 
+        required: true 
     },
-    participants : 
-        [{type: mongoose.Schema.Types.ObjectId,
-            ref: 'User'
-        }],
-    createdBy: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
-   },
-    registeredPokemons: [{
-        userId: { 
-            type: mongoose.Schema.Types.ObjectId, 
-            ref: 'User',
-            required: true 
-        },
-        pokemons: [{ 
-            type: mongoose.Schema.Types.ObjectId, 
-            ref: 'Pokemon', 
-            required: true 
-        }]
-    }]
-    
-})
+    createdBy: { 
+        type: Schema.Types.ObjectId, 
+        ref: 'User', 
+        required: true },
+    participants: [{ 
+        type: Schema.Types.ObjectId,
+        ref: 'User' }],
+    registeredPokemons: [
+        {
+            userId: { 
+                type: Schema.Types.ObjectId,
+                ref: 'User',
+                required: true },
+            pokemons: { 
+                type: [String], 
+                required: true }
+        }
+    ]
+});
 
-const Event = mongoose.model('Event', eventSchema)
+module.exports = mongoose.model('Event', EventSchema);

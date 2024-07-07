@@ -6,6 +6,7 @@ import Register from './pages/Register/Register'
 import Profile from './pages/Profile/Profile'
 import Pokedex from './pages/Pokedex/Pokedex'
 import PokemonDetails from './pages/PokemonDetails/PokemonDetails'
+import Events from './pages/Event/Events'
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
       <Route path ="/profile" element = {<Profile />} />
       <Route path="/pokedex" element={<Pokedex/>} />
       <Route path="/details/:name" element={<PokemonDetails />} />
+      <Route path ="/events" element = {<Events />} />
      </Routes>
       </div>
     </>

@@ -1,4 +1,4 @@
-import './Navbar.css';
+import './Navbar.css'
 
 function Navbar() {
     return (
@@ -10,7 +10,7 @@ function Navbar() {
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
-    );
+    )
 }
 
-export default Navbar;
+export default Navbar

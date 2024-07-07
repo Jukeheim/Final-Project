@@ -1,22 +1,22 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../../contexts/AuthContext"
-import { getLikedPokemons } from "../../services/PokedexService";
+import { getLikedPokemons } from "../../services/PokedexService"
 
 function Profile() {
-    const { user } = useContext(AuthContext);
-    const [likedPokemons, setLikedPokemons] = useState([]);
+    const { user } = useContext(AuthContext)
+    const [likedPokemons, setLikedPokemons] = useState([])
 
     useEffect(() => {
         if (user?._id) {
             getLikedPokemons(user._id)
                 .then(response => {
-                    setLikedPokemons(response.data);
+                    setLikedPokemons(response.data)
                 })
                 .catch(error => {
-                    console.error('no data', error);
-                });
+                    console.error('no data', error)
+                })
         }
-    }, [user]);
+    }, [user])
     
 
     return (
@@ -38,7 +38,7 @@ function Profile() {
                 ))}
             </div>
         </div>
-    );
+    )
 }
 
-export default Profile;
+export default Profile
