@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { registerPokemons } from "../../services/EventService"
+import "./RegisterPokemon.css"
 
 const POKEMON_API_URL = 'https://pokeapi.co/api/v2/pokemon?limit=100'
 

@@ -1,0 +1,29 @@
+/* RegisterPokemon.css */
+
+h3 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+select {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
