@@ -1,21 +1,32 @@
 .pokemon-card {
-    background-color: #2b2b2b;
+    background-color: #ffffff;
     border-radius: 10px;
     padding: 20px;
     text-align: center;
-    
+    position: relative;
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.pokemon-card:hover {
+    transform: translateY(-5px);
 }
 
 .pokemon-card h1 {
     text-transform: capitalize;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
 }
 
 .pokemon-card img {
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
     display: block;
     margin: 0 auto;
- 
 }
 
 .pokemon-card .types {
@@ -27,9 +38,78 @@
     margin: 5px;
     padding: 5px 10px;
     border-radius: 15px;
-    color: rgb(0, 0, 0);
+    color: #fff;
+    font-weight: bold;
+    text-transform: capitalize;
 }
+
 .pokemon-card .type.grass {
+    background-color: #78C850;
+}
+
+.pokemon-card .type.poison {
+    background-color: #A040A0;
+}
+
+
+
+.pokemon-card .buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: auto;
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    width: calc(100% - 20px);
+}
+
+.pokemon-card .buttons .details-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 5px 10px;
+    /* Adjusted padding */
+    text-decoration: none;
+    transition: background-color 0.3s;
+    position: absolute;
+    /* Ensure absolute positioning */
+    bottom: 10px;
+    left: 10px;
+}
+
+.pokemon-card .buttons .details-button:hover {
+    background-color: #0056b3;
+}
+
+.pokemon-card .buttons .like-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: transform 0.3s;
+    position: absolute;
+    /* Ensure absolute positioning */
+    bottom: 10px;
+    right: 10px;
+}
+
+.pokemon-card .buttons .like-button img {
+    width: 25px;
+    /* Smaller size for the icon */
+    height: 25px;
+    /* Smaller size for the icon */
+}
+
+.pokemon-card .buttons .like-button:hover {
+    transform: scale(1.1);
+}
+
+/* .pokemon-card .type.grass {
     background-color: #78C850;
 }
 
@@ -99,10 +179,6 @@
 
 .pokemon-card .type.fairy {
     background-color: #EE99AC;
-}
+} */
 
 
-.pokemon-card .type {
-    background-color: #e0e0e0;
-   
-}

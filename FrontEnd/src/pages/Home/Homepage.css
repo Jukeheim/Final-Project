@@ -1,20 +1,5 @@
-html,
-body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    width: 100%;
-    font-family: Arial, sans-serif;
-}
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: rgb(176, 176, 20);
-    /* Corrected path */
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-}
+
+
 
 .HomePage {
     text-align: center;

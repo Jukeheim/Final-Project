@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
-import { deleteEvent, getEventList, joinEvent } from "../../services/EventService";
-import EventForm from "../../components/EventForm/EventForm";
-import RegisterPokemons from "../../components/RegisterPokemon/RegisterPokemon";
-import "./Events.css"; // Import the CSS file
+import { useNavigate } from "react-router-dom";
+import { getEventList, joinEvent } from "../../services/EventService";
+import "./Events.css";
 
 function Events({ user }) {
     const [events, setEvents] = useState([]);
     const [error, setError] = useState(null);
-    const [editingEvent, setEditingEvent] = useState(null);
     const [visibleEvents, setVisibleEvents] = useState(8);
+    const [alertMessage, setAlertMessage] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         getEventList()
@@ -16,21 +16,21 @@ function Events({ user }) {
             .catch(error => setError(error.message));
     }, []);
 
-    const handleDelete = (id) => {
-        deleteEvent(id)
-            .then(() => setEvents(events.filter(event => event._id !== id)))
-            .catch(error => setError(error.message));
-    };
-
     const handleJoin = (id) => {
         joinEvent(id)
-            .then(updatedEvent => setEvents(events.map(event => event._id === id ? updatedEvent : event)))
-            .catch(error => setError(error.message));
+            .then(updatedEvent => {
+                setEvents(events.map(event => event._id === id ? updatedEvent : event));
+                handleDetail(id);
+            })
+            .catch(error => setAlertMessage(error.message));
     };
 
-    const handleSave = (savedEvent) => {
-        setEvents(events.map(event => event._id === savedEvent._id ? savedEvent : event));
-        setEditingEvent(null);
+    const handleCreate = () => {
+        navigate('/event-form');
+    };
+
+    const handleDetail = (id) => {
+        navigate(`/events/${id}`);
     };
 
     const loadMoreEvents = () => {
@@ -44,28 +44,23 @@ function Events({ user }) {
     return (
         <div className="events-container">
             <h1>Events</h1>
-            <EventForm event={editingEvent} onSave={handleSave} />
+            {alertMessage && <div className="alert">{alertMessage}</div>}
+            <button onClick={handleCreate} className="create-event-button">Create Event</button>
             <ul className="events-list">
                 {events.length > 0 ? (
                     events.slice(0, visibleEvents).map(event => (
-                        <li key={event._id} className="event-item">
-                            <div className="event-header">
-                                <h2>{event.name}</h2>
-                                <p>Participants: {event.participants.length}/{event.maxParticipants}</p>
-                            </div>
-                            <RegisterPokemons eventId={event._id} onRegister={() => {
-                                getEventList().then(setEvents).catch(console.error);
-                            }} />
-                            <div className="event-actions">
-                                <button onClick={() => handleJoin(event._id)}>Join</button>
-                                {user && event.createdBy._id === user._id && (
-                                    <>
-                                        <button onClick={() => setEditingEvent(event)}>Edit</button>
-                                        <button onClick={() => handleDelete(event._id)}>Delete</button>
-                                    </>
-                                )}
-                            </div>
-                        </li>
+                        event && event._id && (
+                            <li key={event._id} className="event-item">
+                                <div className="event-header">
+                                    <h2>{event.name}</h2>
+                                    <p>Participants: {event.participants.length}/{event.maxParticipants}</p>
+                                </div>
+                                <div className="event-actions">
+                                    <button onClick={() => handleJoin(event._id)}>Join</button>
+                                    <button onClick={() => handleDetail(event._id)}>Details</button>
+                                </div>
+                            </li>
+                        )
                     ))
                 ) : (
                     <li>No events available</li>

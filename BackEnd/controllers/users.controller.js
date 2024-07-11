@@ -2,14 +2,12 @@ const User = require("../models/User.model");
 const createError = require("http-errors");
 const jwt = require("jsonwebtoken");
 
-// { "email": "carlos@email.com", "password": "12345678" }
-
 module.exports.create = (req, res, next) => {
-    const { email, password } = req.body;
+    const { email, password, username, profilePicture } = req.body;
 
-    User.create({ email, password })
+    User.create({ email, password, username, profilePicture })
         .then((userCreated) => {
-            res.status(204).json(userCreated);
+            res.status(201).json(userCreated);
         })
         .catch(next);
 };
@@ -24,7 +22,7 @@ module.exports.getUser = (req, res, next) => {
     User.findById(req.params.id)
         .then((user) => {
             if (!user) {
-                next(createError(402, "User not found"));
+                next(createError(404, "User not found"));
             } else {
                 res.json(user);
             }
@@ -36,7 +34,7 @@ module.exports.getCurrentUser = (req, res, next) => {
     User.findById(req.currentUserId)
         .then((user) => {
             if (!user) {
-                next(createError(402, "User not found"));
+                next(createError(404, "User not found"));
             } else {
                 res.json(user);
             }

@@ -1,16 +1,29 @@
 import createHttp from "./BaseService";
 
-const http = createHttp(true)
+const http = createHttp(true);
 
 export function getEventList() {
-    return http.get('/events')
+    return http.get('/events');
 }
+
+export function getEventDetail(id) {
+    return http.get(`/events/${id}`)
+        .then(response => {
+            console.log("Full response from API:", response);
+            return response;
+        })
+        .catch(error => {
+            console.error("Error fetching event details:", error);
+            throw new Error("Failed to fetch event details. Please try again later.");
+        });
+}
+
 
 export function createEvent(eventData) {
     return http.post('/events', eventData)
         .then(response => response.data)
         .catch(error => {
-            console.error('Error creating event', error); 
+            console.error('Error creating event', error);
             throw error;
         });
 }
@@ -19,7 +32,7 @@ export function editEvent(id, eventData) {
     return http.put(`/events/${id}`, eventData)
         .then(response => response.data)
         .catch(error => {
-            console.error('Error editing event', error); 
+            console.error('Error editing event', error);
             throw error;
         });
 }

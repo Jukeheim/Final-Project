@@ -20,13 +20,23 @@ const UserSchema = new mongoose.Schema(
             required: [true, "required field"],
             minlength: [8, "invalid length"],
         },
+        username: {
+            type: String,
+            required: true,
+            trim: true,
+            unique: true,
+        },
+        profilePicture: {
+            type: String,
+            required: false,
+        },
     },
     {
         timestamps: true,
         toJSON: {
             virtuals: true,
             transform: (doc, ret) => {
-                // Sirve para cambiar el output de los endpoints cuando hago res.json
+                delete ret.password;
                 delete ret.__v;
             },
         },
@@ -42,7 +52,6 @@ UserSchema.pre("save", function (next) {
                 next();
             })
             .catch(next);
-        // .catch(err => next(err))
     } else {
         next();
     }

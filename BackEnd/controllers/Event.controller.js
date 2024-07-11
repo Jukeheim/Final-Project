@@ -109,3 +109,20 @@ module.exports.getEventList = (req, res, next) => {
     .then(events => res.json(events))
     .catch(error => next(error))
 };
+
+module.exports.getEventDetail = (req, res, next) => {
+    const { id } = req.params;
+
+    Event.findById(id)
+        .populate('createdBy', 'email')
+        .populate('participants', 'email')
+        .then(event => {
+            if (!event) {
+                return res.status(404).json({ message: "Event not found" });
+            }
+            res.json(event);
+        })
+        .catch(error => next(error));
+};
+
+

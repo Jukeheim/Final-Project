@@ -9,3 +9,4 @@ export const createUser = (user) => {
 export const loginService = (user) => {
     return http.post("/login", user);
 };
+

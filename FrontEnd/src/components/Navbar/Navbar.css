@@ -2,35 +2,97 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #3b4cca;
-    /* Pokemon theme color */
-    padding: 10px 20px;
-    color: white;
+    background-color: #333;
+    color: #fff;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    padding: 0 20px;
+    z-index: 1000;
 }
 
 .navbar-brand {
-    font-size: 24px;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-brand a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.5rem;
     font-weight: bold;
+    margin-right: 20px;
+    /* Added spacing to the right */
+}
+
+.pokedex-link {
+    margin-left: 20px;
+    /* Adjusted spacing to the right */
+    color: #fff;
+    text-decoration: none;
 }
 
 .navbar-links {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
+    list-style: none;
     display: flex;
+    align-items: center;
+    margin: 0;
 }
 
 .navbar-links li {
-    margin-left: 20px;
+    margin: 0 1rem;
+    position: relative;
 }
 
-.navbar-links a {
-    color: white;
+.navbar-links a,
+.dropdown-toggle {
+    color: #fff;
     text-decoration: none;
-    font-size: 18px;
+    background: none;
+    border: none;
+    cursor: pointer;
 }
 
-.navbar-links a:hover {
-    color: #ffcc00;
-    /* Pokemon theme hover color */
+.dropdown-toggle {
+    padding: 0.5rem 1rem;
+}
+
+.dropdown-menu {
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background-color: #333;
+    border: none;
+    padding: 0.5rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 0.5rem;
+    z-index: 1001;
+}
+
+.dropdown-item {
+    color: #fff;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    width: 100%;
+    text-align: left;
+}
+
+.dropdown-item:hover {
+    background-color: #555;
+}
+
+.logout-button {
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+}
+
+.logout-button:hover {
+    background-color: #555;
 }

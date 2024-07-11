@@ -1,15 +1,17 @@
-import { useState, useEffect } from 'react'
-import { getPokemonList } from '../../services/PokedexService'
-import PokemonCard from '../../components/Card/Card'
-import './Pokedex.css'
+import { useState, useEffect, useContext } from 'react';
+import { getPokemonList, getLikedPokemons } from '../../services/PokedexService';
+import PokemonCard from '../../components/Card/Card';
+import { AuthContext } from '../../contexts/AuthContext';
+import './Pokedex.css';
 
 function Pokedex() {
-    const [pokemonList, setPokemonList] = useState([])
-    const [error, setError] = useState(null)
-    const [displayCount, setDisplayCount] = useState(8)
-    const [searchTerm, setSearchTerm] = useState('')
-    const [selectedType, setSelectedType] = useState('')
-    const [allTypes, setAllTypes] = useState([])
+    const [pokemonList, setPokemonList] = useState([]);
+    const [error, setError] = useState(null);
+    const [displayCount, setDisplayCount] = useState(8);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [selectedType, setSelectedType] = useState('');
+    const [allTypes, setAllTypes] = useState([]);
+    const { user } = useContext(AuthContext);
 
     useEffect(() => {
         getPokemonList()
@@ -21,38 +23,51 @@ function Pokedex() {
                             ...pokemon,
                             id: details.id,
                             types: details.types
-                        }))
-                }))
+                        }));
+                }));
             })
             .then(detailedPokemonList => {
-                setPokemonList(detailedPokemonList)
-                setAllTypes([...new Set(detailedPokemonList.flatMap(pokemon => pokemon.types.map(type => type.type.name)))])
+                if (user?._id) {
+                    getLikedPokemons(user._id)
+                        .then(likedPokemons => {
+                            const likedPokemonIds = likedPokemons.map(p => p.pokemonId);
+                            detailedPokemonList.forEach(pokemon => {
+                                pokemon.isLiked = likedPokemonIds.includes(pokemon.id);
+                            });
+                            setPokemonList(detailedPokemonList);
+                            setAllTypes([...new Set(detailedPokemonList.flatMap(pokemon => pokemon.types.map(type => type.type.name)))]);
+                        })
+                        .catch(error => setError(error.message));
+                } else {
+                    setPokemonList(detailedPokemonList);
+                    setAllTypes([...new Set(detailedPokemonList.flatMap(pokemon => pokemon.types.map(type => type.type.name)))]);
+                }
             })
-            .catch(error => setError(error.message))
-    }, [])
+            .catch(error => setError(error.message));
+    }, [user]);
 
     const handleLoadMore = () => {
-        setDisplayCount(prevCount => prevCount + 8)
-    }
+        setDisplayCount(prevCount => prevCount + 8);
+    };
 
     const handleSearchChange = (e) => {
-        setSearchTerm(e.target.value.toLowerCase())
-        setDisplayCount(8)
-    }
+        setSearchTerm(e.target.value.toLowerCase());
+        setDisplayCount(8);
+    };
 
     const handleTypeChange = (e) => {
-        setSelectedType(e.target.value)
-        setDisplayCount(8) 
-    }
+        setSelectedType(e.target.value);
+        setDisplayCount(8);
+    };
 
     const filteredPokemonList = pokemonList.filter(pokemon => {
-        const matchesSearch = pokemon.name.toLowerCase().includes(searchTerm)
-        const matchesType = selectedType ? pokemon.types.some(type => type.type.name === selectedType) : true
-        return matchesSearch && matchesType
-    })
+        const matchesSearch = pokemon.name.toLowerCase().includes(searchTerm);
+        const matchesType = selectedType ? pokemon.types.some(type => type.type.name === selectedType) : true;
+        return matchesSearch && matchesType;
+    });
 
     if (error) {
-        return <div>Error: {error}</div>
+        return <div>Error: {error}</div>;
     }
 
     return (
@@ -81,7 +96,7 @@ function Pokedex() {
                 <button onClick={handleLoadMore}>Load More</button>
             )}
         </div>
-    )
+    );
 }
 
-export default Pokedex
+export default Pokedex;
