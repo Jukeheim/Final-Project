@@ -1,6 +1,6 @@
 import createHttp from "./BaseService";
 
-const http = createHttp(); // No need to pass 'true' if authentication is not required
+const http = createHttp(true);
 
 export function getPokemonList(offset = 0, limit = 6) {
     return http.get(`/pokemon?offset=${offset}&limit=${limit}`)
@@ -39,7 +39,7 @@ export function getEvolutionChain(url) {
 }
 
 export function likePokemon(userId, pokemon) {
-    return http.post(`/pokemon/like`, {
+    return http.post(`/liked-pokemon`, {
         userId,
         pokemonId: pokemon.id,
         pokemonName: pokemon.name,
@@ -48,18 +48,18 @@ export function likePokemon(userId, pokemon) {
 }
 
 export function unlikePokemon(userId, pokemonId) {
-    return http.post(`/pokemon/unlike`, {
+    return http.post(`/liked-pokemon/unlike`, {
         userId,
         pokemonId
     });
 }
 
 export function isPokemonLiked(userId, pokemonId) {
-    return http.get(`/pokemon/isLiked`, {
+    return http.get(`/liked-pokemon/isLiked`, {
         params: { userId, pokemonId }
     });
 }
 
 export function getLikedPokemons(userId) {
-    return http.get(`/pokemon/liked/${userId}`);
+    return http.get(`/liked-pokemon/${userId}`);
 }

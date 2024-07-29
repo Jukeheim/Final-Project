@@ -26,14 +26,9 @@ module.exports.getLikedPokemons = (req, res) => {
 module.exports.isPokemonLikedByUser = (req, res) => {
     const { userId, pokemonId } = req.query;
     const numericPokemonId = Number(pokemonId);
-    console.log('Received request to check if Pokemon is liked:', { userId, numericPokemonId });
-    console.log('Data types - userId:', typeof userId, ', pokemonId:', typeof numericPokemonId);
 
-    // Directly query the MongoDB database
     LikedPokemon.findOne({ userId: userId.toString(), pokemonId: numericPokemonId })
         .then(likedPokemon => {
-            console.log('Query executed:', { userId: userId.toString(), pokemonId: numericPokemonId });
-            console.log('Query result:', likedPokemon);
             res.status(200).json({ isLiked: !!likedPokemon });
         })
         .catch(error => {

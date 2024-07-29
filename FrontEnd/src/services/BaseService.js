@@ -5,10 +5,8 @@ const INVALID_STATUS_CODES = [401];
 
 const createHttp = (useAccessToken = false) => {
     const http = axios.create({
-        baseURL: "http://localhost:3000", // This should point to your local backend
+        baseURL: "http://localhost:3000", // Ensure this is correct
     });
-
-    console.log("Base URL:", http.defaults.baseURL); // This should output 'http://localhost:3000'
 
     if (useAccessToken) {
         http.interceptors.request.use(

@@ -5,6 +5,7 @@ import "./Events.css";
 
 function Events({ user }) {
     const [events, setEvents] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [visibleEvents, setVisibleEvents] = useState(8);
     const [alertMessage, setAlertMessage] = useState(null);
@@ -12,8 +13,14 @@ function Events({ user }) {
 
     useEffect(() => {
         getEventList()
-            .then(data => setEvents(data || []))
-            .catch(error => setError(error.message));
+            .then(data => {
+                setEvents(data || []);
+                setLoading(false);
+            })
+            .catch(error => {
+                setError(error.message);
+                setLoading(false);
+            });
     }, []);
 
     const handleJoin = (id) => {
@@ -36,6 +43,10 @@ function Events({ user }) {
     const loadMoreEvents = () => {
         setVisibleEvents(prevVisibleEvents => prevVisibleEvents + 8);
     };
+
+    if (loading) {
+        return <div>Loading events...</div>;
+    }
 
     if (error) {
         return <div>Error loading events: {error}</div>;

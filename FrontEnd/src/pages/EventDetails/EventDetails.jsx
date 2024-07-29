@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getEventDetail, deleteEvent } from '../../services/EventService';
 import RegisterPokemons from '../../components/RegisterPokemon/RegisterPokemon';
 import { AuthContext } from '../../contexts/AuthContext';
+import { RingLoader } from 'react-spinners';
 import './EventDetails.css';
 
 const EventDetail = () => {
@@ -39,10 +40,15 @@ const EventDetail = () => {
     }
 
     if (!event) {
-        return <div>Loading...</div>;
+        return (
+            <div className="loader-container">
+                <RingLoader color="#36d7b7" size={150} />
+            </div>
+        );
     }
 
     const isEventCreator = user && event.createdBy._id === user._id;
+    const userRegistered = user && event.registeredPokemons.some(reg => reg.userId === user._id);
 
     return (
         <div className="event-detail-container">
@@ -55,26 +61,30 @@ const EventDetail = () => {
                     <button onClick={handleDelete} className="delete-event-button">Delete Event</button>
                 </div>
             )}
-            <h2>Participants:</h2>
-            <ul>
-                {event.participants.map(participant => (
-                    <li key={participant._id}>
-                        <p>Email: {participant.email}</p>
-                        <p>Pokémon Registered:</p>
-                        <ul>
-                            {event.registeredPokemons
-                                .filter(reg => reg.userId.toString() === participant._id.toString())
-                                .map(reg => reg.pokemons.map(pokemon => (
-                                    <li key={pokemon}>{pokemon}</li>
-                                )))
-                            }
-                        </ul>
-                    </li>
-                ))}
-            </ul>
-            <RegisterPokemons eventId={event._id} onRegister={() => {
-                getEventDetail(id).then(setEvent).catch(console.error);
-            }} />
+            <div className="participants-section">
+                <h2>Participants:</h2>
+                <div className="participants-list">
+                    {event.participants.map(participant => (
+                        <div key={participant._id} className="participant-card">
+                            <h3>{participant.username}</h3>
+                            <p>Pokémon Registered:</p>
+                            <ul>
+                                {event.registeredPokemons
+                                    .filter(reg => reg.userId === participant._id)
+                                    .map(reg => reg.pokemons.map(pokemon => (
+                                        <li key={pokemon}>{pokemon}</li>
+                                    )))
+                                }
+                            </ul>
+                        </div>
+                    ))}
+                </div>
+            </div>
+            {!userRegistered && (
+                <RegisterPokemons eventId={event._id} onRegister={() => {
+                    getEventDetail(id).then(setEvent).catch(console.error);
+                }} />
+            )}
         </div>
     );
 };

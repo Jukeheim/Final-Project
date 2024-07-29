@@ -51,7 +51,7 @@ export function joinEvent(id) {
         .then(response => response.data)
         .catch(error => {
             console.error("Error joining event:", error);
-            throw new Error("Failed to join event. Please try again later.");
+            throw new Error("Already Joined");
         });
 }
 

@@ -3,6 +3,7 @@ import { getPokemonList, getLikedPokemons } from '../../services/PokedexService'
 import PokemonCard from '../../components/Card/Card';
 import { AuthContext } from '../../contexts/AuthContext';
 import './Pokedex.css';
+import RingLoader from 'react-spinners/RingLoader';
 
 function Pokedex() {
     const [pokemonList, setPokemonList] = useState([]);
@@ -12,6 +13,7 @@ function Pokedex() {
     const [selectedType, setSelectedType] = useState('');
     const [allTypes, setAllTypes] = useState([]);
     const { user } = useContext(AuthContext);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         getPokemonList()
@@ -37,13 +39,18 @@ function Pokedex() {
                             setPokemonList(detailedPokemonList);
                             setAllTypes([...new Set(detailedPokemonList.flatMap(pokemon => pokemon.types.map(type => type.type.name)))]);
                         })
-                        .catch(error => setError(error.message));
+                        .catch(error => setError(error.message))
+                        .finally(() => setLoading(false));
                 } else {
                     setPokemonList(detailedPokemonList);
                     setAllTypes([...new Set(detailedPokemonList.flatMap(pokemon => pokemon.types.map(type => type.type.name)))]);
+                    setLoading(false);
                 }
             })
-            .catch(error => setError(error.message));
+            .catch(error => {
+                setError(error.message);
+                setLoading(false);
+            });
     }, [user]);
 
     const handleLoadMore = () => {
@@ -71,29 +78,36 @@ function Pokedex() {
     }
 
     return (
-        <div>
+        <div className="pokedex-container">
             <h1>Pokémon List</h1>
-            <div>
+            <div className="search-filter-container">
                 <input
                     type="text"
                     placeholder="Search Pokémon"
                     value={searchTerm}
                     onChange={handleSearchChange}
+                    className="search-bar"
                 />
-                <select value={selectedType} onChange={handleTypeChange}>
+                <select value={selectedType} onChange={handleTypeChange} className="filter-dropdown">
                     <option value="">All Types</option>
                     {allTypes.map((type, i) => (
                         <option key={i} value={type}>{type}</option>
                     ))}
                 </select>
             </div>
-            <div className="pokemon-list">
-                {filteredPokemonList.slice(0, displayCount).map((pokemon, i) => (
-                    <PokemonCard key={i} pokemon={pokemon} />
-                ))}
-            </div>
+            {loading ? (
+                <div className="loader-container">
+                    <RingLoader color={"#123abc"} loading={loading} size={150} />
+                </div>
+            ) : (
+                <div className="pokemon-list">
+                    {filteredPokemonList.slice(0, displayCount).map((pokemon, i) => (
+                        <PokemonCard key={i} pokemon={pokemon} />
+                    ))}
+                </div>
+            )}
             {displayCount < filteredPokemonList.length && (
-                <button onClick={handleLoadMore}>Load More</button>
+                <button onClick={handleLoadMore} className="load-more-button">Load More</button>
             )}
         </div>
     );

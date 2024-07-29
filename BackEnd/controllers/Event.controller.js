@@ -114,8 +114,8 @@ module.exports.getEventDetail = (req, res, next) => {
     const { id } = req.params;
 
     Event.findById(id)
-        .populate('createdBy', 'email')
-        .populate('participants', 'email')
+        .populate('createdBy', 'username')
+        .populate('participants', 'username')
         .then(event => {
             if (!event) {
                 return res.status(404).json({ message: "Event not found" });

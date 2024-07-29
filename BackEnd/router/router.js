@@ -25,11 +25,10 @@ router.get(
 router.get("/users/:id", usersController.getUser);
 
 // Liked pokemons
-router.post('/pokemon/like', likedPokemonsController.addLikedPokemon);
-router.post('/pokemon/unlike', likedPokemonsController.unlikePokemon);
-router.get('/pokemon/isLiked', likedPokemonsController.isPokemonLikedByUser);
-router.get('/pokemon/liked/:userId', likedPokemonsController.getLikedPokemons);
-
+router.post('/liked-pokemon', likedPokemonsController.addLikedPokemon);
+router.post('/liked-pokemon/unlike', likedPokemonsController.unlikePokemon);
+router.get('/liked-pokemon/isLiked', likedPokemonsController.isPokemonLikedByUser);
+router.get('/liked-pokemon/:userId', likedPokemonsController.getLikedPokemons);
 
 // Events
 router.post('/events', authMiddlewares.isAuthenticated, eventController.createEvent);

@@ -1,31 +1,50 @@
-
-
-
 .HomePage {
-    text-align: center;
-    border-radius: 10px;
-    color: white;
+    display: flex;
+    justify-content: flex-start;
+    /* Align items to the start (left) */
+    align-items: center;
+    height: 100vh;
+    padding-left: 20px;
+    /* Add some padding to the left */
 }
 
 .homepage-header {
-    padding: 10px;
-    color:blue
-    
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    /* Align items to the start (left) */
+    padding: 20px;
+    max-width: 80%;
+    margin: 0;
 }
 
-button {
-    background-color: white;
-    border: 2px solid black;
-    border-radius: 10px;
-    color: black;
+.welcome-container {
+    text-align: left;
+}
+
+.welcome-container h1 {
+    color: #2c3e50;
+    font-size: 3em;
+    margin-bottom: 20px;
+}
+
+.button-container {
+    display: flex;
+    gap: 10px;
+    /* Add some space between the buttons */
+}
+
+.button-container button {
+    background-color: #2ecc71;
+    border: none;
+    border-radius: 5px;
+    color: white;
     padding: 10px 20px;
-    font-size: 16px;
+    font-size: 1em;
     cursor: pointer;
-    margin: 20px;
+    transition: background-color 0.3s;
 }
 
-button:hover {
-    background-color: yellow;
-    color: black;
-    
+.button-container button:hover {
+    background-color: #27ae60;
 }

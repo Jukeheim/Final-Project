@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import { useNavigate, Navigate } from "react-router-dom";
 import { createUser } from "../../services/UserService";
+import './Register.css';
 
 const Register = () => {
     const { user: currentUser, isAuthLoaded } = useContext(AuthContext);
@@ -44,9 +45,9 @@ const Register = () => {
     }
 
     return (
-        <div>
-            <h1 className="mb-3">Register</h1>
-            <form onSubmit={handleSubmit}>
+        <div className="register-container">
+            <form className="register-form" onSubmit={handleSubmit}>
+                <h1>Register</h1>
                 <div className="mb-3">
                     <label htmlFor="email" className="form-label">Email</label>
                     <input
